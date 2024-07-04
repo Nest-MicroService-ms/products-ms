@@ -11,32 +11,37 @@ export class ProductsController {
 
   //@Post()
   @MessagePattern({ cmd : 'createProduct'})
-  create(@Payload() createProductDto: CreateProductDto) {
+  createProduct(@Payload() createProductDto: CreateProductDto) {
     return this.productsService.create(createProductDto);
   }
 
  // @Get()
   @MessagePattern({ cmd : 'getAllProducts'})
-  findAll(@Payload() paginationDto:PaginationDto) {
+  getAllProducts(@Payload() paginationDto:PaginationDto) {
     return this.productsService.findAll(paginationDto);
   }
 
   //@Get(':id')
   @MessagePattern({ cmd : 'getProductById'})
-  findOne(@Payload('id',ParseIntPipe) id:number) {
+  getProductById(@Payload('id',ParseIntPipe) id:number) {
 
     return this.productsService.findOne(id);
   }
   //@Patch(':id')
   @MessagePattern({cmd : 'updateProduct'})
-  async update(@Payload() updateProductDto: UpdateProductDto) {
+  async updateProduct(@Payload() updateProductDto: UpdateProductDto) {
     
     return await this.productsService.update(updateProductDto.id, updateProductDto);
   }
 
   //@Delete(':id')
   @MessagePattern( { cmd: 'deleteProduct'})
-  async remove(@Payload('id',ParseIntPipe) id: number) {
+  async deleteProduct(@Payload('id',ParseIntPipe) id: number) {
     return this.productsService.remove(id);
+  }
+
+  @MessagePattern({ cmd : 'validateProducts'})
+  async validateProduct(@Payload() ids : number[]) {
+    return this.productsService.validaProducts(ids)
   }
 }
